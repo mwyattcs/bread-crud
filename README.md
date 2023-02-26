@@ -11,5 +11,8 @@ npm install
 npm start
 ```
 
+**Additionally, you need to add your information to db-connect.js in the database directory.**
+
+
 You can navigate to the page using http://localhost:9125/
 
