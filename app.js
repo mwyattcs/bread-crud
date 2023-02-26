@@ -1,0 +1,196 @@
+/*
+    SETUP
+*/
+
+// Express
+const express = require('express');
+const app = express();
+app.use(express.json())
+app.use(express.urlencoded({ extended: true }))
+
+PORT = 9125;
+
+// Database
+const db = require('./database/db-connector');
+
+// Handlebars
+const exphbs = require('express-handlebars');
+app.engine('.hbs', exphbs.engine({
+    extname: ".hbs"
+}));
+app.set('view engine', '.hbs');
+
+// Static Files
+app.use(express.static('public'));
+
+/*
+    ROUTES
+*/
+
+// GET ROUTES
+app.get('/', function (req, res) {
+    // Declare Query 1
+    let query1;
+
+    // If there is no query string, we just perform a basic SELECT
+    if (req.query.name === undefined) {
+        query1 = "SELECT * FROM Products;";
+    }
+
+    // If there is a query string, we assume this is a search, and return desired results
+    else {
+        query1 = `SELECT * FROM Products WHERE product_name LIKE "${req.query.name}%"`
+    }
+
+    let query2 = "SELECT * FROM Product_Categories"
+    let query3 = "SELECT * FROM Bakeries;";
+
+
+
+    // Run the 1st query
+    db.pool.query(query1, function (error, rows, fields) {
+        let products = rows;
+
+        db.pool.query(query2, (error, rows, fields) => {
+            let categories = rows;
+
+            db.pool.query(query3, (error, rows, fields) => {
+
+                // Save the planets
+                let bakeries = rows;
+
+                // Construct an object for reference in the table
+                // Array.map is awesome for doing something with each
+                // element of an array.
+                let bakeriesmap = {}
+                bakeries.map(bakery => {
+                    let id = parseInt(bakery.bakery_id, 10);
+                    bakeriesmap[id] = bakery["name"];
+                })
+
+                let categoriesmap = {}
+                categories.map(category => {
+                    let id = parseInt(category.product_category_id, 10);
+                    categoriesmap[id] = category["category_name"];
+                })
+
+                // Overwrite the homeworld ID with the name of the planet in the people object
+                products = products.map(product => {
+                    return Object.assign(product, { bakery_id: bakeriesmap[product.bakery_id], product_category_id: categoriesmap[product.product_category_id] })
+                })
+
+                return res.render('index', { data: products, bakeries: bakeries, categories: categories });
+            })
+        })
+    })
+})
+
+
+
+app.post('/add-product-form', function (req, res) {
+    // Capture the incoming data and parse it back to a JS object
+    let data = req.body;
+
+    // Capture NULL values
+    let price = parseInt(data['input-price']);
+    if (isNaN(price)) {
+        price = 0
+    }
+
+    let quantity = parseInt(data['input-quantity']);
+    if (isNaN(quantity)) {
+        quantity = 0
+    }
+
+    // Create the query and run it on the database
+    query1 = `INSERT INTO Products (product_name, product_price, quantity_in_stock, bakery_id, product_category_id) VALUES ('${data['input-name']}', '${price}', '${quantity}', '${data['input-bakery']}', '${data['input-category']}')`;
+    db.pool.query(query1, function (error, rows, fields) {
+
+        // Check to see if there was an error
+        if (error) {
+
+            // Log the error to the terminal so we know what went wrong, and send the visitor an HTTP response 400 indicating it was a bad request.
+            console.log(error)
+            res.sendStatus(400);
+        }
+
+        // If there was no error, we redirect back to our root route, which automatically runs the SELECT * FROM bsg_people and
+        // presents it on the screen
+        else {
+            res.redirect('/');
+        }
+    })
+})
+
+app.delete('/delete-product-ajax/', function (req, res, next) {
+    let data = req.body;
+    let product_id = parseInt(data.id);
+    let deleteFromProductsHasOrders = `DELETE FROM Products_has_Orders WHERE product_id = ?`;
+    let deleteFromProducts = `DELETE FROM Products WHERE product_id = ?`;
+
+
+    // Run the 1st query
+    db.pool.query(deleteFromProductsHasOrders, [product_id], function (error, rows, fields) {
+        if (error) {
+
+            // Log the error to the terminal so we know what went wrong, and send the visitor an HTTP response 400 indicating it was a bad request.
+            console.log(error);
+            res.sendStatus(400);
+        }
+
+        else {
+            // Run the second query
+            db.pool.query(deleteFromProducts, [product_id], function (error, rows, fields) {
+
+                if (error) {
+                    console.log(error);
+                    res.sendStatus(400);
+                } else {
+                    res.sendStatus(204);
+                }
+            })
+        }
+    })
+});
+
+app.put('/put-product-ajax', function (req, res, next) {
+    let data = req.body;
+
+    let product_category_id = parseInt(data.category);
+    let product = parseInt(data.name);
+
+    let queryUpdateProduct = `UPDATE Products SET product_category_id = ? WHERE Products.product_id = ?`;
+    let selectCategory = `SELECT * FROM Product_Categories WHERE product_category_id = ?`
+
+    // Run the 1st query
+    db.pool.query(queryUpdateProduct, [product_category_id, product], function (error, rows, fields) {
+        if (error) {
+
+            // Log the error to the terminal so we know what went wrong, and send the visitor an HTTP response 400 indicating it was a bad request.
+            console.log(error);
+            res.sendStatus(400);
+        }
+
+        // If there was no error, we run our second query and return that data so we can use it to update the people's
+        // table on the front-end
+        else {
+            // Run the second query
+            db.pool.query(selectCategory, [product_category_id], function (error, rows, fields) {
+
+                if (error) {
+                    console.log(error);
+                    res.sendStatus(400);
+                } else {
+                    res.send(rows);
+                }
+            })
+        }
+    })
+});
+
+/*
+    LISTENER
+*/
+app.listen(PORT, function () {
+    console.log('Express started on http://localhost:' + PORT + '; press Ctrl-C to terminate.')
+});

@@ -1,0 +1,19 @@
+{
+  "name": "bread-project",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon app.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.18.2",
+    "express-handlebars": "^6.0.7",
+    "forever": "^3.0.4",
+    "mysql": "^2.18.1",
+    "nodemon": "^2.0.20"
+  }
+}

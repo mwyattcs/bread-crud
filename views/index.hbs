@@ -1,0 +1,109 @@
+<!-- index.hbs -->
+<h1>The server is running!</h1>
+<p>If you see this text, the server is <strong>definitely</strong> working!</p>
+
+<!-- Table of Products -->
+<table id="product-table">
+
+    {{!-- Header section --}}
+    <thead>
+
+        {{!-- For just the first row, we print each key of the row object as a header cell so we
+        know what each column means when the page renders --}}
+        <tr>
+            {{#each data.[0]}}
+            <th>
+                {{@key}}
+            </th>
+            {{/each}}
+            <th>delete</th>
+        </tr>
+    </thead>
+
+    {{!-- Body section --}}
+    <tbody>
+
+        {{!-- For each row, print the id, fname, lname, homeworld and age, in order --}}
+        {{#each data}}
+        <tr data-value={{this.product_id}}>
+            <td>{{this.product_id}}</td>
+            <td>{{this.product_name}}</td>
+            <td>{{this.product_price}}</td>
+            <td>{{this.quantity_in_stock}}</td>
+            <td>{{this.bakery_id}}</td>
+            <td>{{this.product_category_id}}</td>
+            <td><button onclick="deleteProduct({{this.product_id}})">Delete</button></td>
+        </tr>
+        {{/each}}
+    </tbody>
+</table>
+<script src="./js/delete_product.js"></script>
+
+<!-- Search for Product -->
+<h2>Search for Product by Name</h2>
+<form id="search-product-html" method='GET' action='/'>
+    <label for="input-name">Search by Name: </label>
+    <input type="text" name="name" id="input-name-html-search">
+    <input type="submit">
+
+    <a href='/'><button>Reset</button></a>
+</form>
+
+<!-- Add Product -->
+<h2>Adding a Product</h2>
+<p>To add a new product, please enter the information below and click `Submit`!</p>
+<form id="add-product-form" method="POST" action="/add-product-form">
+    <label for="input-name">Name: </label>
+    <input type="text" name="input-name" id="input-name-ajax">
+    
+    <label for="input-price">Price: </label>
+    <input type="text" name="input-price" id="input-price-ajax">
+
+    <label for="input-quantity">Quantity: </label>
+    <input type="text" name="input-quantity" id="input-quantity-ajax">
+
+    <label for="input-bakery">Bakery: </label>
+    <select name="input-bakery" id="input-bakery-ajax">
+        <option value="">Select a Bakery</option>
+        {{#each bakeries}}
+        <option value="{{this.bakery_id}}">{{this.name}}</option>
+        {{/each}}
+    </select>
+
+    <label for="input-category">Category: </label>
+    <select name="input-category" id="input-category-ajax">
+        <option value="">Select a Category</option>
+        {{#each categories}}
+        <option value="{{this.product_category_id}}">{{this.category_name}}</option>
+        {{/each}}
+    </select>
+
+    <input type="submit">
+</form>
+
+
+<!-- Update Product Category -->
+<h2>Update a Product's Category</h2>
+<p>To update a specific product's Category, select the Name from the drop-down menu on the left and their new Category from the drop down menu on the right</p>
+<form id="update-product-form-ajax">
+
+    <label for="input-name">Name: </label>
+    <select name="input-name" id="mySelect">
+        <option value="test">Select a Product</option>
+        {{#each data}}
+        <option value="{{this.product_id}}">{{this.product_name}}</option>
+        {{/each}}
+    </select>
+
+    <label for="input-category">Category: </label>
+    <select name="input-category" id="input-category-update">
+        <option>Select a Category</option>
+        {{#each categories}}
+        <option value="{{this.product_category_id}}">{{this.category_name}}</option>
+        {{/each}}
+    </select>
+    <input type="submit">
+
+</form>
+
+<script src="./js/update_product.js"></script>
