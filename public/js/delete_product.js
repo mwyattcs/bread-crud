@@ -1,3 +1,8 @@
+// Citation for this code:
+// Date: 3/2/23
+// Based on NodeJS Starter App, written for CS 340
+// https://github.com/osu-cs340-ecampus/nodejs-starter-app
+
 //  code for deletePerson using regular javascript/xhttp
 function deleteProduct(product_id) {
     // Put our data we want to send in a javascript object

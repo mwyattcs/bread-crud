@@ -1,3 +1,8 @@
+// Citation for this code:
+// Date: 3/2/23
+// Based on NodeJS Starter App, written for CS 340
+// https://github.com/osu-cs340-ecampus/nodejs-starter-app
+
 /*
     SETUP
 */
@@ -8,7 +13,7 @@ const app = express();
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
 
-PORT = 9125;
+PORT = 9126;
 
 // Database
 const db = require('./database/db-connector');
@@ -23,12 +28,22 @@ app.set('view engine', '.hbs');
 // Static Files
 app.use(express.static('public'));
 
+
 /*
     ROUTES
 */
 
 // GET ROUTES
-app.get('/', function (req, res) {
+
+app.get('/', function(req, res) {
+    res.render('index')
+});
+
+app.get('/index', function(req, res) {
+    res.render('index')
+});
+
+app.get('/products', function (req, res) {
     // Declare Query 1
     let query1;
 
@@ -79,7 +94,7 @@ app.get('/', function (req, res) {
                     return Object.assign(product, { bakery_id: bakeriesmap[product.bakery_id], product_category_id: categoriesmap[product.product_category_id] })
                 })
 
-                return res.render('index', { data: products, bakeries: bakeries, categories: categories });
+                return res.render('products', { data: products, bakeries: bakeries, categories: categories });
             })
         })
     })
@@ -117,7 +132,7 @@ app.post('/add-product-form', function (req, res) {
         // If there was no error, we redirect back to our root route, which automatically runs the SELECT * FROM bsg_people and
         // presents it on the screen
         else {
-            res.redirect('/');
+            res.redirect('/products');
         }
     })
 })

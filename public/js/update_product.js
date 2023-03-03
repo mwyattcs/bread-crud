@@ -1,3 +1,9 @@
+// Citation for this code:
+// Date: 3/2/23
+// Based on NodeJS Starter App, written for CS 340
+// https://github.com/osu-cs340-ecampus/nodejs-starter-app
+
+
 // Get the objects we need to modify
 let updateProductForm = document.getElementById('update-product-form-ajax');
 
