@@ -1,0 +1,85 @@
+<html>
+
+<head>
+    <title>Products Has Orders</title>
+    <link href="style.css" rel="stylesheet" type="text/css" />
+</head>
+
+<body>
+    <h1>Products Has Orders</h1>
+    <h2>Browse Products Has Orders</h2>
+
+    [ <a href="index.html">Index</a> | <a href="customers.html">Customers</a> | <a href="bakeries.html">Bakeries</a> | <a href="orders.html">Orders</a> |
+    <a href="products.html">Products</a> | <a href="product_categories.html">Product Categories</a> | <a href="products_has_orders.html">Products Has Orders</a>]
+
+    <div id="browse" style="display: block">
+        <p><strong>Browse Products Has Orders</strong></p>
+        <table border="1" cellpadding="5">
+            <tr>
+                <th>Product ID</th>
+                <th>Order ID</th>
+                <th>Quantity</th>
+            </tr>
+            <tr>
+                <td>1</td>
+                <td>1</td>
+                <td>2</td>
+            </tr>
+            <tr>
+                <td>2</td>
+                <td>2</td>
+                <td>2</td>
+            </tr>
+            <tr>
+                <td>3</td>
+                <td>3</td>
+                <td>3</td>
+            </tr>
+        </table>
+        <p>&nbsp;</p>
+    </div>
+
+    <div id="insert" style="display: block">
+        <p><strong>Update Products Has Orders</strong></p>
+        <form action="products_has_orders.html" method="post">
+            <table border="0" cellpadding="5">
+                <tr>
+                    <td>Product Name:</td>
+                    <td><input type="text" name="product_name" /></td>
+                </tr>
+                <tr>
+                    <td>Order ID:</td>
+                    <td><input type="text" name="order_id" /></td>
+                </tr>
+                <tr>
+                    <td>Quantity:</td>
+                    <td><input type="int" name="quantity" /></td>
+                </tr>
+                <tr>
+                    <td>&nbsp;</td>
+                    <td><input type="submit" value="Update" /></td>
+                </tr>
+            </table>
+        </form>
+        <p>&nbsp;</p>
+    </div>
+
+    <div id="delete" style="display: block">
+        <p><strong>Delete a Products Has Orders</strong></p>
+        <form action="products_has_orders.html" method="delete">
+            <table border="0" cellpadding="5">
+                <tr>
+                    <td>Product Name:</td>
+                    <td><input type="text" name="product_name" /></td>
+                </tr>
+                <tr>
+                    <td>Order ID:</td>
+                    <td><input type="text" name="order_id" /></td>
+                </tr>
+                    <td><input type="submit" value="Delete" /></td>
+                </tr>
+            </table>
+        </form>
+        <p>&nbsp;</p>
+    </div>
+</body>

@@ -1,0 +1,98 @@
+<html>
+
+<head>
+    <title>Customers</title>
+    <link href="style.css" rel="stylesheet" type="text/css" />
+</head>
+
+<body>
+    <h1>Customers</h1>
+    <h2>Browse Customer Information</h2>
+
+    [ <a href="index.html">Index</a> | <a href="customers.html">Customers</a> | <a href="bakeries.html">Bakeries</a> | <a href="orders.html">Orders</a> |
+    <a href="products.html">Products</a> | <a href="product_categories.html">Product Categories</a> | <a href="products_has_orders.html">Products Has Orders</a> ]
+
+    <div id="browse" style="display: block">
+        <p><strong>Browse Customers</strong></p>
+        <table border="1" cellpadding="5">
+            <tr>
+                <th>ID</th>
+                <th>name</th>
+                <th>email</th>
+                <th>address</th>
+
+            </tr>
+            <tr>
+                <td>1</td>
+                <td>Ellen</td>
+                <td>ellen@fakeemail.com</td>
+                <td>123 Apple St.</td>
+            </tr>
+            <tr>
+                <td>2</td>
+                <td>Michael</td>
+                <td>michael@fakeemail.com</td>
+                <td>456 Banana St.</td>
+            </tr>
+            <tr>
+                <td>3</td>
+                <td>Alyssa</td>
+                <td>alyssa@fakeemail.com</td>
+                <td>789 Orange St.</td>
+            </tr>
+        </table>
+        <p>&nbsp;</p>
+    </div>
+
+    <div id="insert" style="display: block">
+        <p><strong>Add a Customer</strong></p>
+        <form action="customers.html" method="post">
+            <table border="0" cellpadding="5">
+                <tr>
+                    <td>Name:</td>
+                    <td><input type="text" name="name" /></td>
+                </tr>
+                <tr>
+                    <td>Email:</td>
+                    <td><input type="text" name="email" /></td>
+                </tr>
+                <tr>
+                    <td>Address:</td>
+                    <td><input type="text" name="address" /></td>
+                </tr>
+                <tr>
+                    <td>&nbsp;</td>
+                    <td><input type="submit" value="Add Customer" /></td>
+                </tr>
+            </table>
+        </form>
+        <p>&nbsp;</p>
+    </div>
+
+    <div id="update" style="display: block">
+        <p><strong>Update Customer</strong></p>
+        <form action="customers.html" method="post">
+            <table border="0" cellpadding="5">
+                <tr>
+                    <td>ID:</td>
+                    <td><input type="text" name="id" /></td>
+                </tr>
+                <tr>
+                    <td>Name:</td>
+                    <td><input type="text" name="name" /></td>
+                </tr>
+                <tr>
+                    <td>Email:</td>
+                    <td><input type="text" name="email" /></td>
+                </tr>
+                <tr>
+                    <td>Address:</td>
+                    <td><input type="text" name="address" /></td>
+                </tr>
+                <tr>
+                    <td>&nbsp;</td>
+                    <td><input type="submit" value="Update Customer" /></td>
+                </tr>
+            </table>
+        </form>
+        <p>&nbsp;</p>
