@@ -119,24 +119,14 @@ app.get('/product_categories', function (req, res) {
     })
 })
 
-app.post('/add-product-category-form', function (req, res) {
-    let data = req.body
-
-    let category_name = data['input-category-name'];
-
-    let query1 = `INSERT INTO Product_Categories (category_name) VALUES ('${category_name}')`;
+app.get('/bakeries', function (req, res) {
+    let query1 = "SELECT * FROM Bakeries;";
 
     db.pool.query(query1, function (error, rows, fields) {
-        if (error) {
-            console.log(error)
-            res.sendStatus(400);
-        }
-        else {
-            res.redirect('/product_categories');
-        }
+        let bakeries = rows;
+        return res.render('bakeries', { data: bakeries});
     })
 })
-
 
 
 app.post('/add-customer-form', function (req, res) {
@@ -158,6 +148,42 @@ app.post('/add-customer-form', function (req, res) {
     })
 })
 
+app.post('/add-product-category-form', function (req, res) {
+    let data = req.body
+
+    let category_name = data['input-category-name'];
+
+    let query1 = `INSERT INTO Product_Categories (category_name) VALUES ('${category_name}')`;
+
+    db.pool.query(query1, function (error, rows, fields) {
+        if (error) {
+            console.log(error)
+            res.sendStatus(400);
+        }
+        else {
+            res.redirect('/product_categories');
+        }
+    })
+})
+
+app.post('/add-bakery-form', function (req, res) {
+    let data = req.body
+
+    let name = data['input-name'];
+    let email = data['input-email'];
+    let address = data['input-address'];
+
+    let query1 = `INSERT INTO Bakeries (name, email, address) VALUES ('${name}', '${email}', '${address}')`;
+    db.pool.query(query1, function (error, rows, fields) {
+        if (error) {
+            console.log(error)
+            res.sendStatus(400);
+        }
+        else {
+            res.redirect('/bakeries');
+        }
+    })
+})
 
 
 app.post('/add-product-form', function (req, res) {
