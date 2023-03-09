@@ -35,11 +35,11 @@ app.use(express.static('public'));
 
 // GET ROUTES
 
-app.get('/', function(req, res) {
+app.get('/', function (req, res) {
     res.render('index')
 });
 
-app.get('/index', function(req, res) {
+app.get('/index', function (req, res) {
     res.render('index')
 });
 
@@ -97,6 +97,37 @@ app.get('/products', function (req, res) {
                 return res.render('products', { data: products, bakeries: bakeries, categories: categories });
             })
         })
+    })
+})
+
+
+app.get('/customers', function (req, res) {
+    let query1 = "SELECT * FROM Customers;";
+
+    db.pool.query(query1, function (error, rows, fields) {
+        let customers = rows;
+        return res.render('customers', { data: customers});
+    })
+})
+
+app.post('/add-customer-form', function (req, res) {
+    let data = req.body
+
+    let name = data['input-name'];
+    let email = data['input-email'];
+    let address = data['input-address'];
+
+    console.log(name, email, address)
+
+    let query1 = `INSERT INTO Customers (name, email, address) VALUES ('${name}', '${email}', '${address}')`;
+    db.pool.query(query1, function (error, rows, fields) {
+        if (error) {
+            console.log(error)
+            res.sendStatus(400);
+        }
+        else {
+            res.redirect('/customers');
+        }
     })
 })
 
