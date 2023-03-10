@@ -56,7 +56,6 @@ app.get('/products', function (req, res) {
     else {
         query1 = `SELECT * FROM Products WHERE product_name LIKE "${req.query.name}%"`
     }
-
     let query2 = "SELECT * FROM Product_Categories"
     let query3 = "SELECT * FROM Bakeries;";
 
@@ -71,7 +70,6 @@ app.get('/products', function (req, res) {
 
             db.pool.query(query3, (error, rows, fields) => {
 
-                // Save the planets
                 let bakeries = rows;
 
                 // Construct an object for reference in the table
@@ -89,7 +87,6 @@ app.get('/products', function (req, res) {
                     categoriesmap[id] = category["category_name"];
                 })
 
-                // Overwrite the homeworld ID with the name of the planet in the people object
                 products = products.map(product => {
                     return Object.assign(product, { bakery_id: bakeriesmap[product.bakery_id], product_category_id: categoriesmap[product.product_category_id] })
                 })
@@ -286,6 +283,36 @@ app.put('/put-product-ajax', function (req, res, next) {
         }
     })
 });
+
+app.get('/orders', function (req, res) {
+    let query1 = "SELECT * FROM Orders;";
+
+    db.pool.query(query1, function (error, rows, fields) {
+        let orders = rows;
+        return res.render('orders', { data: orders});
+    })
+})
+
+app.post('/add-order-form', function (req, res) {
+    let data = req.body
+
+    let total = data['input-total'];
+    let date = data['input-date'];
+    let bakery_id = data['bakery_id'];
+    let customer_id = data['customer_id'];
+
+// this doesn't work yet
+    let query1 = `INSERT INTO Orders (order_total, order_date, bakery_id, customer_id) VALUES ('${total}', '${date}', '${bakery_id}', '${customer_id}')`;
+    db.pool.query(query1, function (error, rows, fields) {
+        if (error) {
+            console.log(error)
+            res.sendStatus(400);
+        }
+        else {
+            res.redirect('/orders');
+        }
+    })
+})
 
 /*
     LISTENER

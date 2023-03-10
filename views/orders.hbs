@@ -6,13 +6,13 @@
  [ <a href="index">Index</a> | <a href="customers">Customers</a> | <a href="bakeries">Bakeries</a> | <a href="orders">Orders</a> |
     <a href="products">Products</a> | <a href="product_categories">Product Categories</a>  | <a href="products_has_orders">Products Has Orders</a>]
 
-<h1>Product Categories</h1>
+<h1>Orders</h1>
 
-<h2>Browse Product Categories</h2>
+<h2>Browse Orders</h2>
 
    
-<!-- Table of Product Categories -->
-<table id="product-categories-table" border="1" cellpadding="5">
+<!-- Table of Customers -->
+<table id="order-table" border="1" cellpadding="5">
 
     {{!-- Header section --}}
     <thead>
@@ -33,20 +33,32 @@
 
         {{!-- For each row, print the id, fname, lname, homeworld and age, in order --}}
         {{#each data}}
-        <tr data-value={{this.product_category_id}}>
-            <td>{{this.product_category_id}}</td>
-            <td>{{this.category_name}}</td>
+        <tr data-value={{this.order_id}}>
+            <td>{{this.order_id}}</td>
+            <td>{{this.order_total}}</td>
+            <td>{{this.order_date}}</td>
+            <td>{{this.bakery_id}}</td>
+            <td>{{this.customer_id}}</td>
         </tr>
         {{/each}}
     </tbody>
 </table>
 
-<!-- Add Product Category -->
-<h2>Add a Product Category</h2>
-<p>To add a new product category, please enter the information below and click `Submit`!</p>
-<form id="add-product-category-form" method="POST" action="/add-product-category-form">
-    <label for="input-category-name">Name: </label>
-    <input type="text" name="input-category-name" id="input-category-name-ajax">
+<!-- Add Order -->
+<h2>Add an Order</h2>
+<p>To add a new order, please enter the information below and click `Submit`!</p>
+<form id="add-order-form" method="POST" action="/add-order-form">
+    <label for="input-total">Order Total: </label>
+    <input type="number" name="input-total" id="input-total-ajax">
+    
+    <label for="input-date">Date: </label>
+    <input type="date" name="input-date" id="input-date-ajax">
+
+    <label for="input-bakery">Bakery ID: </label>
+    <input type="number" name="input-bakery" id="input-bakery-ajax">
+
+    <label for="input-customer">Customer ID: </label>
+    <input type="number" name="input-customer" id="input-customer-ajax">
 
     <input type="submit">
 </form>
