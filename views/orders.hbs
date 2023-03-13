@@ -55,10 +55,22 @@
     <input type="date" name="input-date" id="input-date-ajax">
 
     <label for="input-bakery">Bakery ID: </label>
-    <input type="number" name="input-bakery" id="input-bakery-ajax">
+    {{!-- <input type="text" name="input-bakery" id="input-bakery-ajax"> --}}
+    <select name="input-bakery" id="input-bakery-ajax">
+        <option value="">Select a Bakery</option>
+        {{#each bakeries}}
+        <option value="{{this.bakery_id}}">{{this.name}}</option>
+        {{/each}}
+    </select>
 
     <label for="input-customer">Customer ID: </label>
-    <input type="number" name="input-customer" id="input-customer-ajax">
+    {{!-- <input type="text" name="input-customer" id="input-customer-ajax"> --}}
+     <select name="input-customer" id="input-customer-ajax">
+        <option value="">Select a Customer</option>
+        {{#each customers}}
+        <option value="{{this.customer_id}}">{{this.name}}</option>
+        {{/each}}
+    </select>
 
     <input type="submit">
 </form>

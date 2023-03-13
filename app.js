@@ -33,7 +33,7 @@ app.use(express.static('public'));
     ROUTES
 */
 
-// GET ROUTES
+// GET ROUTES //
 
 app.get('/', function (req, res) {
     res.render('index')
@@ -125,6 +125,38 @@ app.get('/bakeries', function (req, res) {
     })
 })
 
+
+app.get('/orders', function (req, res) {
+    let query1 = "SELECT * FROM Orders;";
+
+    let query2 = "SELECT * From Bakeries;";
+
+    let query3 = "SELECT * From Customers;";
+
+    db.pool.query(query1, function (error, rows, fields) {
+        let orders = rows;
+
+        db.pool.query(query2, function (error, rows, fields) {
+            let bakeries = rows;
+
+            db.pool.query(query3, function(error, rows, fields) {
+                let customers = rows;
+                return res.render('orders', { data: orders, bakeries: bakeries, customers: customers});
+            })
+        })
+    })
+})
+
+app.get('/products_has_orders', function (req, res) {
+    let query1 = "SELECT * FROM Products_has_Orders;";
+
+    db.pool.query(query1, function (error, rows, fields) {
+        let orders = rows;
+        return res.render('products_has_orders', { data: orders});
+    })
+})
+
+// POST ROUTES //
 
 app.post('/add-customer-form', function (req, res) {
     let data = req.body
@@ -218,6 +250,29 @@ app.post('/add-product-form', function (req, res) {
     })
 })
 
+app.post('/add-order-form', function (req, res) {
+    let data = req.body
+
+    let total = data['input-total'];
+    let date = data['input-date'];
+    let bakery_id = data['bakery_id'];
+    let customer_id = data['customer_id'];
+
+// this doesn't work yet
+    let query1 = `INSERT INTO Orders (order_total, order_date, bakery_id, customer_id) VALUES ('${total}', '${date}', '${bakery_id}', '${customer_id}')`;
+    db.pool.query(query1, function (error, rows, fields) {
+        if (error) {
+            console.log(error)
+            res.sendStatus(400);
+        }
+        else {
+            res.redirect('/orders');
+        }
+    })
+})
+
+// DELETE ROUTES //
+
 app.delete('/delete-product-ajax/', function (req, res, next) {
     let data = req.body;
     let product_id = parseInt(data.id);
@@ -248,6 +303,8 @@ app.delete('/delete-product-ajax/', function (req, res, next) {
         }
     })
 });
+
+// PUT ROUTES //
 
 app.put('/put-product-ajax', function (req, res, next) {
     let data = req.body;
@@ -284,35 +341,9 @@ app.put('/put-product-ajax', function (req, res, next) {
     })
 });
 
-app.get('/orders', function (req, res) {
-    let query1 = "SELECT * FROM Orders;";
 
-    db.pool.query(query1, function (error, rows, fields) {
-        let orders = rows;
-        return res.render('orders', { data: orders});
-    })
-})
 
-app.post('/add-order-form', function (req, res) {
-    let data = req.body
 
-    let total = data['input-total'];
-    let date = data['input-date'];
-    let bakery_id = data['bakery_id'];
-    let customer_id = data['customer_id'];
-
-// this doesn't work yet
-    let query1 = `INSERT INTO Orders (order_total, order_date, bakery_id, customer_id) VALUES ('${total}', '${date}', '${bakery_id}', '${customer_id}')`;
-    db.pool.query(query1, function (error, rows, fields) {
-        if (error) {
-            console.log(error)
-            res.sendStatus(400);
-        }
-        else {
-            res.redirect('/orders');
-        }
-    })
-})
 
 /*
     LISTENER

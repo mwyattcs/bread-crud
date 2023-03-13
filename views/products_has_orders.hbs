@@ -6,13 +6,13 @@
  [ <a href="index">Index</a> | <a href="customers">Customers</a> | <a href="bakeries">Bakeries</a> | <a href="orders">Orders</a> |
     <a href="products">Products</a> | <a href="product_categories">Product Categories</a>  | <a href="products_has_orders">Products Has Orders</a>]
 
-<h1>Bakeries</h1>
+<h1>Products_has_Orders</h1>
 
-<h2>Browse Bakeries</h2>
+<h2>Browse</h2>
 
    
-<!-- Table of Bakeries -->
-<table id="product-categories-table" border="1" cellpadding="5">
+<!-- Table of Products_has_orders -->
+<table id="products-has-orders-table" border="1" cellpadding="5">
 
     {{!-- Header section --}}
     <thead>
@@ -33,28 +33,10 @@
 
         {{!-- For each row, print the id, fname, lname, homeworld and age, in order --}}
         {{#each data}}
-        <tr data-value={{this.bakery_id}}>
-            <td>{{this.bakery_id}}</td>
-            <td>{{this.name}}</td>
-            <td>{{this.email}}</td>
-            <td>{{this.address}}</td>
+        <tr data-value={{this.order_id}}>
+            <td>{{this.product_id}}</td>
+            <td>{{this.quantity}}</td>
         </tr>
         {{/each}}
     </tbody>
 </table>
-
-<!-- Add Bakery -->
-<h2>Add a Bakery</h2>
-<p>To add a new bakery, please enter the information below and click `Submit`!</p>
-<form id="add-bakery-form" method="POST" action="/add-bakery-form">
-    <label for="input-bakery-name">Name: </label>
-    <input type="text" name="input-name" id="input-name-ajax">
-
-    <label for="input-email">Email: </label>
-    <input type="text" name="input-email" id="input-email-ajax">
-
-    <label for="input-address">Address: </label>
-    <input type="text" name="input-address" id="input-address-ajax">
-
-    <input type="submit">
-</form>
