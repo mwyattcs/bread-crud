@@ -255,11 +255,11 @@ app.post('/add-order-form', function (req, res) {
 
     let total = data['input-total'];
     let date = data['input-date'];
-    let bakery_id = data['bakery_id'];
-    let customer_id = data['customer_id'];
+    //let bakery_id = data['bakery_id'];
+    //let customer_id = data['customer_id'];
 
-// this doesn't work yet
-    let query1 = `INSERT INTO Orders (order_total, order_date, bakery_id, customer_id) VALUES ('${total}', '${date}', '${bakery_id}', '${customer_id}')`;
+    let query1 = `INSERT INTO Orders (order_total, order_date, bakery_id, customer_id) VALUES (${total}, '${date}', ${data['input-bakery']}, ${data['input-customer']})`;
+    console.log(query1)
     db.pool.query(query1, function (error, rows, fields) {
         if (error) {
             console.log(error)
