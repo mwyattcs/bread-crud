@@ -150,9 +150,21 @@ app.get('/orders', function (req, res) {
 app.get('/products_has_orders', function (req, res) {
     let query1 = "SELECT * FROM Products_has_Orders;";
 
+    let query2 = "SELECT * FROM Products;";
+
+    let query3 = "SELECT * FROM Orders;";
+
     db.pool.query(query1, function (error, rows, fields) {
         let orders = rows;
-        return res.render('products_has_orders', { data: orders});
+
+        db.pool.query(query2, function (error, rows, fields) {
+            let products = rows;
+
+            db.pool.query(query3, function (error, rows, fields) {
+                let orders2= rows;
+                return res.render('products_has_orders', { data: orders, products: products, orders2: orders2});
+            })
+        })
     })
 })
 
@@ -267,6 +279,24 @@ app.post('/add-order-form', function (req, res) {
         }
         else {
             res.redirect('/orders');
+        }
+    })
+})
+
+app.post('/add-order-details-form', function (req, res) {
+    let data = req.body
+
+    let quantity = data['input-quantity'];
+
+    let query1 = `INSERT INTO Products_has_Orders (order_id, product_id, quantity) VALUES (${data['input-order-id']}, ${data['input-product']}, ${quantity})`;
+    
+    db.pool.query(query1, function (error, rows, fields) {
+        if (error) {
+            console.log(error)
+            res.sendStatus(400);
+        }
+        else {
+            res.redirect('/products_has_orders');
         }
     })
 })

@@ -3,10 +3,8 @@
 // Based on NodeJS Starter App, written for CS 340
 // https://github.com/osu-cs340-ecampus/nodejs-starter-app --}}
  
- [ <a href="index">Index</a> | <a href="customers">Customers</a> | <a href="bakeries">Bakeries</a> | <a href="orders">Orders</a> |
-    <a href="products">Products</a> | <a href="product_categories">Product Categories</a>  | <a href="products_has_orders">Products Has Orders</a>]
 
-<h1>Products_has_Orders</h1>
+<h1>Order Details</h1>
 
 <h2>Browse</h2>
 
@@ -34,9 +32,38 @@
         {{!-- For each row, print the id, fname, lname, homeworld and age, in order --}}
         {{#each data}}
         <tr data-value={{this.order_id}}>
+            <td>{{this.order_id}}</td>
             <td>{{this.product_id}}</td>
             <td>{{this.quantity}}</td>
         </tr>
         {{/each}}
     </tbody>
 </table>
+
+
+<!-- Add Products_has_Orders -->
+<h2>Add order details</h2>
+<p>To add order details for an existing order, please enter the information below and click `Submit`!</p>
+<form id="add-order-details-form" method="POST" action="/add-order-details-form">
+    <label for="input-order-id">Order ID: </label>
+    <select name="input-order-id" id="input-order-id-ajax">
+        <option value="">Select an Order ID</option>
+        {{#each orders2}}
+        <option value="{{this.order_id}}">{{this.order_id}}</option>
+        {{/each}}
+    </select>
+    
+    <label for="input-product">Product: </label>
+    {{!-- <input type="text" name="input-bakery" id="input-bakery-ajax"> --}}
+    <select name="input-product" id="input-product-ajax">
+        <option value="">Select a Product</option>
+        {{#each products}}
+        <option value="{{this.product_id}}">{{this.product_name}}</option>
+        {{/each}}
+    </select>
+
+    <label for="input-quantity">Quantity </label>
+    <input type="number" name="input-quantity" id="input-quantity">
+
+    <input type="submit">
+</form>
