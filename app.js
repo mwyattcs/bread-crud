@@ -242,8 +242,15 @@ app.post('/add-product-form', function (req, res) {
         quantity = 0
     }
 
+    // Capture null bakery values
+    if (data['input-bakery'] === 'none') {
+        data['input-bakery'] = null;
+    } else {
+        data['input-bakery'] = `'${data['input-bakery']}'`;
+    }
+
     // Create the query and run it on the database
-    query1 = `INSERT INTO Products (product_name, product_price, quantity_in_stock, bakery_id, product_category_id) VALUES ('${data['input-name']}', '${price}', '${quantity}', '${data['input-bakery']}', '${data['input-category']}')`;
+    query1 = `INSERT INTO Products (product_name, product_price, quantity_in_stock, bakery_id, product_category_id) VALUES ('${data['input-name']}', '${price}', '${quantity}', ${data['input-bakery']}, '${data['input-category']}')`;
     db.pool.query(query1, function (error, rows, fields) {
 
         // Check to see if there was an error
