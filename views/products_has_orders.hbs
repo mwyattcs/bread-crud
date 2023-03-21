@@ -67,3 +67,38 @@
 
     <input type="submit">
 </form>
+
+
+<!-- Update Product ID -->
+<h2>Update an order's products</h2>
+<p>To update a specific order's products, select the combination of Order ID + Product that you'd like to update, and then use the right menu to select the new Product</p>
+<form id="update-order-details-form-ajax">
+
+     <label for="input-order-id">Order ID: </label>
+    <select name="input-order-id" id="myOrder">
+        <option value="">Select an Order ID</option>
+        {{#each orders2}}
+        <option value="{{this.order_id}}">{{this.order_id}}</option>
+        {{/each}}
+    </select>
+    
+    <label for="input-product">Product: </label>
+    {{!-- <input type="text" name="input-bakery" id="input-bakery-ajax"> --}}
+    <select name="input-product" id="mySelect">
+        <option value="">Select a Product</option>
+        {{#each products}}
+        <option value="{{this.product_id}}">{{this.product_name}}</option>
+        {{/each}}
+    </select>
+
+    <label for="input-new-product">New Product: </label>
+    <select name="input-new-product" id="input-new-product-update">
+        <option>Select a new Product</option>
+        {{#each products}}
+        <option value="{{this.product_id}}">{{this.product_name}}</option>
+        {{/each}}
+    </select>
+    <input type="submit">
+
+</form>
+<script src="./js/update_product_id_order_details.js"></script>

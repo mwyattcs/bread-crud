@@ -162,6 +162,8 @@ app.get('/products_has_orders', function (req, res) {
 
             db.pool.query(query3, function (error, rows, fields) {
                 let orders2= rows;
+
+
                 return res.render('products_has_orders', { data: orders, products: products, orders2: orders2});
             })
         })
@@ -418,7 +420,41 @@ app.put('/put-product-bakery-ajax', function (req, res, next) {
     })
 });
 
+app.put('/put-order-details-ajax', function (req, res, next) {
+    let data = req.body;
 
+    let order_id = parseInt(data.order);
+    let product = parseInt(data.name);
+    let newProduct = parseInt(data.newProduct);
+
+    let queryUpdateOrderDetails = `UPDATE Products_has_Orders SET product_id = ? WHERE Products_has_Orders.order_id = ? AND Products_has_Orders.product_id = ?`;
+    let selectProduct = `SELECT * FROM Products WHERE product_id = ?`
+
+    // Run the 1st query
+    db.pool.query(queryUpdateOrderDetails, [newProduct, order_id, product], function (error, rows, fields) {
+        if (error) {
+
+            // Log the error to the terminal so we know what went wrong, and send the visitor an HTTP response 400 indicating it was a bad request.
+            console.log(error);
+            res.sendStatus(400);
+        }
+
+        // If there was no error, we run our second query and return that data so we can use it to update the people's
+        // table on the front-end
+        else {
+            // Run the second query
+            db.pool.query(selectProduct, [product], function (error, rows, fields) {
+
+                if (error) {
+                    console.log(error);
+                    res.sendStatus(400);
+                } else {
+                    res.send(rows);
+                }
+            })
+        }
+    })
+});
 
 
 /*
