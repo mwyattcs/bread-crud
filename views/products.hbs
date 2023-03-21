@@ -46,7 +46,7 @@
 </table>
 <script src="./js/delete_product.js"></script>
 
-<!-- Search for Product -->
+{{!-- <!-- Search for Product -->
 <h2>Search for Product by Name</h2>
 <form id="search-product-html" method='GET' action='/products'>
     <label for="input-name">Search by Name: </label>
@@ -54,7 +54,7 @@
     <input type="submit">
 
     <a href='/'><button>Reset</button></a>
-</form>
+</form> --}}
 
 <!-- Add Product -->
 <h2>Add a Product</h2>
@@ -97,7 +97,7 @@
 
     <label for="input-name">Name: </label>
     <select name="input-name" id="mySelect">
-        <option value="test">Select a Product</option>
+        <option>Select a Product</option>
         {{#each data}}
         <option value="{{this.product_id}}">{{this.product_name}}</option>
         {{/each}}
@@ -113,5 +113,30 @@
     <input type="submit">
 
 </form>
-
 <script src="./js/update_product.js"></script>
+
+<!-- Update Product Bakery -->
+<h2>Update a Product's Bakery</h2>
+<p>To update a specific product's Bakery, select the Name from the drop-down menu on the left and their new Bakery from the drop down menu on the right. Select 'None' if you would like to leave the Bakery field blank for this product.</p>
+<form id="update-product-bakery-form-ajax">
+
+    <label for="input-name">Name: </label>
+    <select name="input-name" id="mySelect2">
+        <option>Select a Product</option>
+        {{#each data}}
+        <option value="{{this.product_id}}">{{this.product_name}}</option>
+        {{/each}}
+    </select>
+
+    <label for="input-bakery">Bakery: </label>
+    <select name="input-bakery" id="input-bakery-update">
+        <option>Select a Bakery</option>
+        {{#each bakeries}}
+        <option value="{{this.bakery_id}}">{{this.name}}</option>
+        {{/each}}
+        <option value="none">None (leave "Bakery" blank)</option>
+    </select>
+    <input type="submit">
+
+</form>
+<script src="./js/update_product_bakery.js"></script>
