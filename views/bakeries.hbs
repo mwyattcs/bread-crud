@@ -46,13 +46,13 @@
 <p>To add a new bakery, please enter the information below and click `Submit`!</p>
 <form id="add-bakery-form" method="POST" action="/add-bakery-form">
     <label for="input-bakery-name">Name: </label>
-    <input type="text" name="input-name" id="input-name-ajax">
+    <input type="text" name="input-name" id="input-name-ajax" required>
 
     <label for="input-email">Email: </label>
-    <input type="text" name="input-email" id="input-email-ajax">
+    <input type="text" name="input-email" id="input-email-ajax" required>
 
     <label for="input-address">Address: </label>
-    <input type="text" name="input-address" id="input-address-ajax">
+    <input type="text" name="input-address" id="input-address-ajax" required>
 
     <input type="submit">
 </form>

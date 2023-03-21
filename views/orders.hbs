@@ -47,10 +47,10 @@
 <p>Then, please click the 'Order Details' tab above to finish entering the order details.</p>
 <form id="add-order-form" method="POST" action="/add-order-form">
     <label for="input-total">Order Total: </label>
-    <input type="number" name="input-total" id="input-total-ajax">
+    <input type="number" name="input-total" id="input-total-ajax" required>
     
     <label for="input-date">Date: </label>
-    <input type="date" name="input-date" id="input-date-ajax">
+    <input type="date" name="input-date" id="input-date-ajax" required>
 
     <label for="input-bakery">Bakery ID: </label>
     {{!-- <input type="text" name="input-bakery" id="input-bakery-ajax"> --}}
