@@ -280,7 +280,6 @@ app.post('/add-order-form', function (req, res) {
     //let customer_id = data['customer_id'];
 
     let query1 = `INSERT INTO Orders (order_total, order_date, bakery_id, customer_id) VALUES (${total}, '${date}', ${data['input-bakery']}, ${data['input-customer']})`;
-    console.log(query1)
     db.pool.query(query1, function (error, rows, fields) {
         if (error) {
             console.log(error)
